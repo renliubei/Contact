@@ -17,6 +17,8 @@ public class User {
     private String mobile;
     private Integer sex;
     private String token;
+    private Integer[] videoList;
+    private Integer videoNumber;
     @DateTimeFormat(pattern = "yyyy-mm-dd'T'HH:mm:ss")
     private Date registrationTime;
     private Boolean deleted;
