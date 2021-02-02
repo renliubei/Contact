@@ -40,4 +40,8 @@ public interface UserDao {
 
     @Update("Update User SET video_number = #{number} WHERE id = #{id}")
     Integer changeVideoNumber(@Param("id") Integer id, @Param("number") Integer number);
+
+    /*/
+    test
+     */
 }
