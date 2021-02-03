@@ -18,30 +18,29 @@ public interface UserDao {
     User selectByUsername(@Param("username") String username);
 
     @Insert("INSERT INTO user (username, password, mobile) VALUES #{username}, #{password}, #{mobile}")
-    Integer insert(User user);
+    Integer register(User user);
 
     @Update("UPDATE user SET token = #{token} WHERE id = #{id}")
     Integer updateLogin(User user);
 
-    @Update("Update user SET password = #{password} WHERE id = #{id}")
+    @Update("UPDATE user SET password = #{password} WHERE id = #{id}")
     Integer changePassword(@Param("id") Integer id, @Param("password") String password);
 
-    @Update("Update user SET username = #{username} WHERE id = #{id}")
+    @Update("UPDATE user SET username = #{username} WHERE id = #{id}")
     Integer changeUsername(@Param("id") Integer id, @Param("username") String username);
 
-    @Update("Update user SET mobile = #{mobile} WHERE id = #{id}")
+    @Update("UPDATE user SET mobile = #{mobile} WHERE id = #{id}")
     Integer changeMobile(@Param("id") Integer id, @Param("mobile") String mobile);
 
-    @Update("Update user SET sex = #{sex} WHERE id = #{id}")
+    @Update("UPDATE user SET sex = #{sex} WHERE id = #{id}")
     Integer changeSex(@Param("id") Integer id, @Param("sex") Integer sex);
 
-    @Update("Update user SET video_list = #{list} WHERE id = #{id}")
+    @Update("UPDATE user SET video_list = #{list} WHERE id = #{id}")
     Integer changeVideoList(@Param("id") Integer id, @Param("list") String list);
 
-    @Update("Update User SET video_number = #{number} WHERE id = #{id}")
+    @Update("UPDATE user SET video_number = #{number} WHERE id = #{id}")
     Integer changeVideoNumber(@Param("id") Integer id, @Param("number") Integer number);
 
-    /*/
-    test
-     */
+    @Update("UPDATE user SET deleted = true WHERE id = #{id}")
+    Integer deleteAccount(@Param("id") Integer id);
 }

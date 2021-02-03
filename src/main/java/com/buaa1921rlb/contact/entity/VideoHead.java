@@ -8,8 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class videoHead {
-    private Integer id;
+public class VideoHead {
+    private String id;
     private Integer size;
     private Integer[] author;
+    private LogicTree logicTree;
 }

@@ -7,10 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+public class LogicTree {
 
-public class Video {
-    private String id;
-    private Integer[] parent;
-    private Integer[] child;
-    private Integer[] author;
+    private Integer maxSize;
+    private String[] tree;
 }
