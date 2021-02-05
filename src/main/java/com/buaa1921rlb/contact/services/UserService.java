@@ -53,8 +53,17 @@ public interface UserService {
 
     /**
      * 用户销户
+     *
      * @param id 用户 id
      * @return 成功返回 1
      */
     Integer deleteAccount(Integer id);
+
+    /**
+     * 检查手机号是否存在
+     *
+     * @param mobile 手机号
+     * @return 存在返回 true
+     */
+    boolean checkMobileExists(String mobile);
 }

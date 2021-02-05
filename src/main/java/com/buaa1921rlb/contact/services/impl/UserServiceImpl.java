@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User loginByMobile(String mobile, String password) {
         User user = userDao.selectByUserMobile(mobile);
         if (user != null && user.getPassword().equals(HashUtil.sha256(password))) {
@@ -63,5 +64,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer deleteAccount(Integer id) {
         return userDao.deleteAccount(id);
+    }
+
+    @Override
+    public boolean checkMobileExists(String mobile) {
+        return userDao.countByMobile(mobile) > 0;
     }
 }

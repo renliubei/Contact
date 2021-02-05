@@ -11,8 +11,11 @@ public interface UserDao {
     @Select("SELECT * FROM user WHERE id = #{id} AND deleted = false")
     User selectByUserId(@Param("id") String userId);
 
-    @Select("SELECT * FROM user WHERE mobile = #{mobile} AND delete = false")
+    @Select("SELECT * FROM user WHERE mobile = #{mobile} AND deleted = false")
     User selectByUserMobile(@Param("mobile") String mobile);
+
+    @Select("SELECT COUNT * FROM user WHERE mobile = #{mobile}")
+    Integer countByMobile(@Param("mobile") String mobile);
 
     @Select("SELECT * FROM user WHERE username = #{username} AND deleted = false")
     User selectByUsername(@Param("username") String username);
