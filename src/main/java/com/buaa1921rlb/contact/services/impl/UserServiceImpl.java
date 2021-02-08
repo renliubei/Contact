@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Integer changePassword(Integer id, String newPassword) {
-        return userDao.changePassword(id, newPassword);
+        return userDao.changePassword(id, HashUtil.sha256(newPassword));
     }
 
     @Override

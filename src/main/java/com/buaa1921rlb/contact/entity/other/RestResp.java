@@ -22,8 +22,12 @@ public class RestResp {
         return new RestResp(HttpStatus.OK, data);
     }
 
+    public static RestResp ok(String msg) {
+        return new RestResp(HttpStatus.OK.value(), msg, null);
+    }
+
     public static RestResp fail(String message) {
-        return new RestResp(HttpStatus.SERVICE_UNAVAILABLE, message);
+        return new RestResp(HttpStatus.SERVICE_UNAVAILABLE.value(), message);
     }
 
     public RestResp(Integer code, String msg, Object data) {

@@ -14,13 +14,13 @@ public interface UserDao {
     @Select("SELECT * FROM user WHERE mobile = #{mobile} AND deleted = false")
     User selectByUserMobile(@Param("mobile") String mobile);
 
-    @Select("SELECT COUNT * FROM user WHERE mobile = #{mobile}")
+    @Select("SELECT COUNT(id) FROM user WHERE mobile = #{mobile}")
     Integer countByMobile(@Param("mobile") String mobile);
 
     @Select("SELECT * FROM user WHERE username = #{username} AND deleted = false")
     User selectByUsername(@Param("username") String username);
 
-    @Insert("INSERT INTO user (username, password, mobile) VALUES #{username}, #{password}, #{mobile}")
+    @Insert("INSERT INTO user (username, password, mobile, sex) VALUES (#{username}, #{password}, #{mobile}, #{sex})")
     Integer register(User user);
 
     @Update("UPDATE user SET token = #{token} WHERE id = #{id}")
