@@ -11,7 +11,7 @@ public interface UserService {
      * @param password 密码
      * @param username 用户名
      * @param sex      性别
-     * @return 成功返回用户
+     * @return 成功返回 1
      */
     Integer register(String mobile, String password, String username, Integer sex);
 
