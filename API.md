@@ -44,8 +44,8 @@ HTTP通讯及报文BASE64编码均采用UTF-8字符集编码格式。
     "code" : 200,
     "msg" : "OK",
     "data" : {
-        "id" : 0001,
-        "password" : 0001,
+        "id" : "0001",
+        "password" : "0001"
     },
     "timestamp": "2021-02-09T20:28:29.3658782"
 }
@@ -55,13 +55,13 @@ HTTP通讯及报文BASE64编码均采用UTF-8字符集编码格式。
 
 ## 1 服务器总接口
 
-```java
+```
 (IP地址):8080/api
 ```
 
 ## 2 用户操作接口
 
-```java
+```
 /user
 ```
 
@@ -95,10 +95,68 @@ POST
 
 ```json
 {
+    "code": 200,
+    "msg": "OK",
+    "data": null,
+    "timestamp": "2021-02-12T16:25:36.9514297"
+}
+```
+
+```json
+{
     "code": 503,
     "msg": "该手机号已注册，请直接登录",
     "data": null,
     "timestamp": "2021-02-09T20:28:29.3658782"
+}
+```
+
+### 2.2 登录接口
+
+- **接口地址:**	`/login`
+
+#### 2.1.1 请求方法
+
+POST
+
+#### 2.1.2 请求参数
+
+|  参数名  | 数据类型 | 出现要求 |     描述     |
+| :------: | :------: | :------: | :----------: |
+|  moblie  |  String  |    R     | 用户手机号码 |
+| password |  String  |    R     |   用户密码   |
+
+#### 2.1.3 响应参数
+
+| 参数名称  |  类型   | 出现要求 |          描述           |
+| :-------- | :-----: | :------: | :---------------------: |
+| code      | Integer |    R     |         响应码          |
+| msg       | String  |    R     |        相应描述         |
+| data      | Object  |    R     |          null           |
+| id        | String  |    C     | 登陆成功返回用户实际 id |
+| token     | String  |    C     | 登陆成功返回用户 token  |
+| timestamp | String  |    R     |          时间           |
+
+响应示例
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "id": "2",
+        "token": "l85Xs+pDuyOvva68QclCuKdO49rD1U4DqwNgspSlFHc="
+    },
+    "timestamp": "2021-02-12T16:25:36.9514297"
+}
+```
+
+```json
+{
+    "code": 503,
+    "msg": "密码错误或账号已被删除",
+    "data": null,
+    "timestamp": "2021-02-12T16:28:47.6843639"
 }
 ```
 
