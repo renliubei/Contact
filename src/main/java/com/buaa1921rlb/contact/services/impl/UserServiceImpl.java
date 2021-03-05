@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Integer deleteAccount(Integer id) {
         return userDao.deleteAccount(id);
     }

@@ -3,6 +3,7 @@ package com.buaa1921rlb.contact.controller.api;
 import com.buaa1921rlb.contact.entity.User;
 import com.buaa1921rlb.contact.entity.other.RestResp;
 import com.buaa1921rlb.contact.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

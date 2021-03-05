@@ -13,4 +13,5 @@ public class Video {
     private Integer[] parent;
     private Integer[] child;
     private Integer[] author;
+    private String url;
 }

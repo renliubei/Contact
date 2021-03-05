@@ -10,5 +10,5 @@ import lombok.Setter;
 public class LogicTree {
 
     private Integer maxSize;
-    private String[] tree;
+    private String tree;
 }
