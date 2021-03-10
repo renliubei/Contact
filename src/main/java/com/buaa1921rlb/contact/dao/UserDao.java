@@ -1,7 +1,7 @@
 package com.buaa1921rlb.contact.dao;
 
 import com.buaa1921rlb.contact.entity.User;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 import org.apache.ibatis.annotations.*;
 

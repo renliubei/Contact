@@ -19,7 +19,7 @@ public class User {
     private String token;
     private Integer[] videoList;
     private Integer videoNumber;
-    @DateTimeFormat(pattern = "yyyy-mm-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-mm-dd 'T' HH:mm:ss")
     private Date registrationTime;
     private Boolean deleted;
 
