@@ -43,6 +43,7 @@ public class UserController {
         Map<String, String> data = new HashMap<>();
         data.put("id",user.getId().toString());
         data.put("token", user.getToken());
+        data.put("username", user.getUsername());
         return RestResp.ok(data);
     }
 
