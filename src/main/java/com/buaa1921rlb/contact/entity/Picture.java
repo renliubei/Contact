@@ -18,4 +18,5 @@ public class Picture {
     @DateTimeFormat(pattern = "yyyy-mm-dd 'T' HH:mm:ss")
     private Date uploadTime;
     private String url;
+    private Integer authorId;
 }

@@ -13,19 +13,22 @@ import java.util.List;
 @Repository
 public interface PictureVideoSubDao {
 
-    @SELECT("SELECT * FROM picture_video_sub WHERE file_name = #{name} AND deleted = false")
-    Picture selectByFileName(@Param("name") String fileName);
+    @SELECT("SELECT * FROM picture_video_sub WHERE filename = #{name} AND deleted = false")
+    Picture selectByFileName(@Param("name") String filename);
 
     @SELECT("SELECT * FROM picture_video_sub WHERE name_by_user = #{name} AND deleted = false")
     List<Picture> selectByName(@Param("name") String nameByUser);
 
-    @INSERT("INSERT INTO picture_video_sub(file_name, name_by_user, upload_time, url) " +
+    @SELECT("SELECT * FROM picture_video_sub WHERE author_id = #{id} AND deleted = false")
+    List<Picture> selectPictureByAuthor(@Param("id") Integer authorId);
+
+    @INSERT("INSERT INTO picture_video_sub(filename, name_by_user, upload_time, url) " +
             "VALUES(#{name}, #{name_by_user}, #{upload_time}, #{url})")
-    Integer insertPicture(@Param("name") String fileName,
+    Integer insertPicture(@Param("name") String filename,
                           @Param("name_by_user") String nameByUser,
                           @Param("upload_time")Date uploadTime,
                           @Param("url") String url);
 
-    @UPDATE("UPDATE picture_video_sub SET deleted = true WHERE file_name = #{name}")
-    Integer deletePicture(@Param("name") String fileName);
+    @UPDATE("UPDATE picture_video_sub SET deleted = true WHERE filename = #{name}")
+    Integer deletePicture(@Param("name") String filename);
 }
