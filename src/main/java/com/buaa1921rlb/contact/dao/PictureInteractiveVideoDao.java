@@ -13,22 +13,22 @@ import java.util.List;
 @Repository
 public interface PictureInteractiveVideoDao {
 
-    @SELECT("SELECT * FROM picture_interactive_video WHERE filename = #{name} AND deleted = false")
+    @Select("SELECT * FROM picture_interactive_video WHERE filename = #{name} AND deleted = false")
     Picture selectPictureByFileName(@Param("name") String filename);
 
-    @SELECT("SELECT * FROM picture_interactive_video WHERE name_by_user = #{name} AND deleted = false")
+    @Select("SELECT * FROM picture_interactive_video WHERE name_by_user = #{name} AND deleted = false")
     List<Picture> selectPictureByName(@Param("name") String nameByUser);
 
-    @SELECT("SELECT * FROM picture_interactive_video WHERE author_id = #{id} AND deleted = false")
+    @Select("SELECT * FROM picture_interactive_video WHERE author_id = #{id} AND deleted = false")
     List<Picture> selectPictureByAuthor(@Param("id") Integer authorId);
 
-    @INSERT("INSERT INTO picture_interactive_video (filename, name_by_user, upload_time, url) " +
+    @Insert("INSERT INTO picture_interactive_video (filename, name_by_user, upload_time, url) " +
             "VALUES (#{name}, #{url}, #{name_bu_user}, #{upload_time})")
     Integer insertPicture(@Param("name") String filename,
                           @Param("url") String pictureUrl,
                           @Param("name_by_user") String nameByUser,
                           @Param("upload_time") Date uploadTime);
 
-    @UPDATE("UPDATE picture_interactive_video SET deleted = true WHERE filename = #{name}")
+    @Update("UPDATE picture_interactive_video SET deleted = true WHERE filename = #{name}")
     Integer deletePicture(@Param("name") String filename);
 }
