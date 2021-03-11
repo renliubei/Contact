@@ -13,7 +13,7 @@ import java.util.Date;
 public class Picture {
 
     private Integer id;
-    private String name;
+    private String fileName;
     private String nameByUser;
     @DateTimeFormat(pattern = "yyyy-mm-dd 'T' HH:mm:ss")
     private Date uploadTime;
