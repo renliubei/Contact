@@ -45,6 +45,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public Integer logout(Integer id) {
+        User user = userDao.selectByUserId(id);
+        user.setToken(null);
+        return userDao.updateLogin(user);
+    }
+
+    @Override
+    public User getUserById(Integer id) {
+        return userDao.selectByUserId(id);
+    }
+
+    @Override
+    @Transactional
     public Integer changePassword(Integer id, String newPassword) {
         return userDao.changePassword(id, HashUtil.sha256(newPassword));
     }

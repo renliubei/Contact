@@ -3,11 +3,14 @@ package com.buaa1921rlb.contact.controller.api;
 import com.buaa1921rlb.contact.entity.User;
 import com.buaa1921rlb.contact.entity.other.RestResp;
 import com.buaa1921rlb.contact.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.buaa1921rlb.contact.constant.StatusType.SUCCESS;
+import static com.buaa1921rlb.contact.constant.UserType.USER;
 
 @RestController
 @CrossOrigin("*")
@@ -34,17 +37,28 @@ public class UserController {
 
     @PostMapping("/login")
     public RestResp userLogin(@RequestParam("mobile") String mobile,
-                              @RequestParam("password") String password) {
+                              @RequestParam("password") String password,
+                              HttpServletRequest request) {
         boolean isMobileRegistered = userService.checkMobileExists(mobile);
         if(!isMobileRegistered) return RestResp.fail("账号未注册");
 
         User user = userService.loginByMobile(mobile, password);
         if(user == null) return RestResp.fail("密码错误或账号已被删除");
+
+        request.getSession().setAttribute("user_type",USER);
+        request.getSession().setMaxInactiveInterval(240 * 60);
         Map<String, String> data = new HashMap<>();
         data.put("id",user.getId().toString());
         data.put("token", user.getToken());
         data.put("username", user.getUsername());
         return RestResp.ok(data);
+    }
+
+    @PostMapping("logout")
+    public RestResp userLogout(@RequestParam("id") Integer id, HttpServletRequest request) {
+        userService.logout(id);
+        request.getSession().invalidate();
+        return RestResp.ok("注销成功!");
     }
 
     @PostMapping("/changePassword")

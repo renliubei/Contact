@@ -25,6 +25,21 @@ public interface UserService {
     User loginByMobile(String mobile, String password);
 
     /**
+     * 用户注销
+     * @param id 用户 id
+     * @return 成功返回 1
+     */
+    Integer logout(Integer id);
+
+    /**
+     * 通过用户 id 获取用户
+     *
+     * @param id 用户 id
+     * @return User类实体
+     */
+    User getUserById(Integer id);
+
+    /**
      * 用户修改密码
      *
      * @param id          用户 id

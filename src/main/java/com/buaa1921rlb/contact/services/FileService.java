@@ -14,6 +14,15 @@ public interface FileService {
     Integer addFile(String path, MultipartFile file);
 
     /**
+     * 根据文件名查找文件
+     *
+     * @param path   文件路径
+     * @param fileId 文件 id
+     * @return 成功返回 1
+     */
+    Integer getFileById(String path, String fileId);
+
+    /**
      * 删除文件
      *
      * @param path     文件路径

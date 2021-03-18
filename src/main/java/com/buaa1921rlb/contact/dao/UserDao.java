@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.*;
 public interface UserDao {
 
     @Select("SELECT * FROM user WHERE id = #{id} AND deleted = false")
-    User selectByUserId(@Param("id") String userId);
+    User selectByUserId(@Param("id") Integer userId);
 
     @Select("SELECT * FROM user WHERE mobile = #{mobile} AND deleted = false")
     User selectByUserMobile(@Param("mobile") String mobile);
