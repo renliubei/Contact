@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import static com.buaa1921rlb.contact.constant.StatusType.FAIL;
 import static com.buaa1921rlb.contact.constant.StatusType.SUCCESS;
@@ -30,14 +29,20 @@ public class FileServiceImpl implements FileService {
     @Transactional
     public Integer addFile(User user, int fileType, String path, MultipartFile file) {
 
-        File targetFile = new File(path);
-        if (!targetFile.exists()) targetFile.mkdir();
+        try {
+            String filename = fileType + user.getMobile() + (fileDao.countByAuthorAndType(fileType, user.getId()) + 1);
+            String OriginalFileName = file.getOriginalFilename();
+            String suffixName = OriginalFileName.substring(OriginalFileName.lastIndexOf("."));
+            File targetFile = new File(path + "\\" + filename + suffixName);
+            if (!targetFile.exists()) targetFile.mkdir();
+            file.transferTo(targetFile);
 
-        try (FileOutputStream out = new FileOutputStream(path + file.getOriginalFilename())) {
-            out.write(file.getBytes());
+            // FileOutputStream out = new FileOutputStream(path);
+            // out.write(file.getBytes());
+
             MyFile myFile = new MyFile(file);
             myFile.setFileType(fileType);
-            myFile.setFilename(file + user.getMobile() + (fileDao.countByAuthorAndType(fileType, user.getId()) + 1));
+            myFile.setFilename(filename);
             myFile.setAuthorId(user.getId());
             myFile.setUrl(path + "\\" + myFile.getFilename());
             if (1 != fileDao.insertFile(myFile)) return FAIL;

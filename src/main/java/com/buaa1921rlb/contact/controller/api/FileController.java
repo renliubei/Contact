@@ -6,11 +6,7 @@ import com.buaa1921rlb.contact.entity.other.RestResp;
 import com.buaa1921rlb.contact.services.FileService;
 import com.buaa1921rlb.contact.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +16,14 @@ import static com.buaa1921rlb.contact.constant.FileType.*;
 import static com.buaa1921rlb.contact.constant.StatusType.SUCCESS;
 import static com.buaa1921rlb.contact.constant.UploadPath.*;
 
-@Controller
+@RestController
 @CrossOrigin("*")
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 public class FileController {
 
     @Autowired
     FileService fileService;
+    @Autowired
     UserService userService;
 
     @PostMapping("/upload")
@@ -36,14 +33,14 @@ public class FileController {
         User user = userService.getUserById(authorId);
         String path = getFilePath(fileType);
         if (path.equals("")) return RestResp.fail("文件类型错误");
-        if (file.isEmpty())
+        if (file == null || file.isEmpty())
             return RestResp.fail("文件为空, 请重试");
         if (SUCCESS != fileService.addFile(user, fileType, path, file))
             return RestResp.fail("添加失败");
         return RestResp.OK;
     }
 
-    @PostMapping("/download")
+    @GetMapping("/download")
     RestResp downloadFile(@RequestParam("type") int fileType,
                           @RequestParam("id") Integer fileId,
                           HttpServletResponse response) throws UnsupportedEncodingException {
@@ -54,7 +51,6 @@ public class FileController {
 
         File file = new File(myFile.getUrl());
         if (!file.exists()) return RestResp.fail("无文件");
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         // response.setContentType("application/force-download");
         response.setHeader("Content-Disposition", "attachment;fileName=" + java.net.URLEncoder.encode(myFile.getNameByUser(), "UTF-8"));

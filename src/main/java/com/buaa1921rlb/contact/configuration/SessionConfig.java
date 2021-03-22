@@ -14,7 +14,8 @@ public class SessionConfig implements WebMvcConfigurer {
         registry.addInterceptor(new UserSessionInterceptor())
                 .addPathPatterns("/api/user/**")
                 .addPathPatterns("/api/file/**")
-                .excludePathPatterns("/api/user/login");
+                .excludePathPatterns("/api/user/login")
+                .excludePathPatterns("/api/user/register");
     }
 
     @Override
