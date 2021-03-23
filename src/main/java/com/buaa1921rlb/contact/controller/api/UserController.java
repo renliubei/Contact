@@ -1,15 +1,18 @@
 package com.buaa1921rlb.contact.controller.api;
 
+import com.buaa1921rlb.contact.entity.MyFile;
 import com.buaa1921rlb.contact.entity.User;
 import com.buaa1921rlb.contact.entity.other.RestResp;
 import com.buaa1921rlb.contact.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static com.buaa1921rlb.contact.constant.StatusType.SUCCESS;
+import static com.buaa1921rlb.contact.constant.FileType.VIDEO;
 import static com.buaa1921rlb.contact.constant.UserType.USER;
 
 @RestController
@@ -27,11 +30,11 @@ public class UserController {
                              @RequestParam("password") String password,
                              @RequestParam("username") String username,
                              @RequestParam("sex") String sex) {
-        boolean isMobileRegistered  = userService.checkMobileExists(mobile);
-        if(isMobileRegistered) return RestResp.fail("该手机号已注册，请直接登录");
+        boolean isMobileRegistered = userService.checkMobileExists(mobile);
+        if (isMobileRegistered) return RestResp.fail("该手机号已注册，请直接登录");
         Integer sex_int = Integer.parseInt(sex);
-        int res = userService.register(mobile,password,username,sex_int);
-        if(1 == res) return RestResp.OK;
+        int res = userService.register(mobile, password, username, sex_int);
+        if (1 == res) return RestResp.OK;
         return RestResp.fail("注册失败，请再尝试一次");
     }
 
@@ -40,15 +43,15 @@ public class UserController {
                               @RequestParam("password") String password,
                               HttpServletRequest request) {
         boolean isMobileRegistered = userService.checkMobileExists(mobile);
-        if(!isMobileRegistered) return RestResp.fail("账号未注册");
+        if (!isMobileRegistered) return RestResp.fail("账号未注册");
 
         User user = userService.loginByMobile(mobile, password);
-        if(user == null) return RestResp.fail("密码错误或账号已被删除");
+        if (user == null) return RestResp.fail("密码错误或账号已被删除");
 
-        request.getSession().setAttribute("user_type",USER);
+        request.getSession().setAttribute("user_type", USER);
         request.getSession().setMaxInactiveInterval(240 * 60);
         Map<String, String> data = new HashMap<>();
-        data.put("id",user.getId().toString());
+        data.put("id", user.getId().toString());
         data.put("token", user.getToken());
         data.put("username", user.getUsername());
         return RestResp.ok(data);
@@ -65,7 +68,22 @@ public class UserController {
     public RestResp changePassword(@RequestParam("id") Integer id,
                                    @RequestParam("password") String password) {
         int res = userService.changePassword(id, password);
-        if(1 == res) return RestResp.OK;
+        if (1 == res) return RestResp.OK;
         return RestResp.fail("修改失败");
+    }
+
+    @GetMapping("getVideoList")
+    public RestResp getVideoList(@RequestParam("id") Integer id) {
+        List<MyFile> list = userService.getFileByAuthor(id, VIDEO);
+        if (null == list) return RestResp.FAIL;
+
+        List<Map<String, Object>> returnList = new ArrayList<>();
+        for (MyFile myFile : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", myFile.getId());
+            map.put("name", myFile.getNameByUser());
+            returnList.add(map);
+        }
+        return RestResp.ok(returnList);
     }
 }

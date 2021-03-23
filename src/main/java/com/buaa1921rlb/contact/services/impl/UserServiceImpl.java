@@ -1,6 +1,8 @@
 package com.buaa1921rlb.contact.services.impl;
 
+import com.buaa1921rlb.contact.dao.FileDao;
 import com.buaa1921rlb.contact.dao.UserDao;
+import com.buaa1921rlb.contact.entity.MyFile;
 import com.buaa1921rlb.contact.entity.User;
 import com.buaa1921rlb.contact.services.UserService;
 import com.buaa1921rlb.contact.util.HashUtil;
@@ -8,14 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final FileDao fileDao;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, FileDao fileDao) {
         this.userDao = userDao;
+        this.fileDao = fileDao;
     }
 
     @Override
@@ -82,5 +87,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkMobileExists(String mobile) {
         return userDao.countByMobile(mobile) > 0;
+    }
+
+    @Override
+    public List<MyFile> getFileByAuthor(Integer id, int fileType) {
+        return fileDao.selectFileByAuthorAndType(id, fileType);
     }
 }
