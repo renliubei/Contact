@@ -19,15 +19,11 @@ public class MyFile {
     @Id
     private Integer id;
     private String filename;
-    @Column(name = "name_by_user")
     private String nameByUser;
-    @Column(name = "upload_time")
     @DateTimeFormat(pattern = "yyyy-mm-dd 'T' HH:mm:ss")
     private LocalDateTime uploadTime;
     private String url;
-    @Column(name = "author_id")
     private Integer authorId;
-    @Column(name = "file_type")
     private int fileType;
     private boolean deleted;
 

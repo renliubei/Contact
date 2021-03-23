@@ -10,14 +10,17 @@ import java.io.PrintWriter;
 
 public class UserSessionInterceptor implements HandlerInterceptor {
 
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
         if(session != null && session.getAttribute("user_type")!= null) {
             return true;
         } else {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
             PrintWriter writer = response.getWriter();
-            writer.write("{code:0,msg:用户未登录,data:null}");
+            writer.write("Error:请先登录");
             return false;
         }
     }

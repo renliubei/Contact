@@ -1,6 +1,9 @@
 package com.buaa1921rlb.contact.services;
 
+import com.buaa1921rlb.contact.entity.MyFile;
 import com.buaa1921rlb.contact.entity.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -26,6 +29,7 @@ public interface UserService {
 
     /**
      * 用户注销
+     *
      * @param id 用户 id
      * @return 成功返回 1
      */
@@ -81,4 +85,13 @@ public interface UserService {
      * @return 存在返回 true
      */
     boolean checkMobileExists(String mobile);
+
+    /**
+     * 查找所有文件(分类)
+     *
+     * @param id       用户 id
+     * @param fileType 文件类型
+     * @return 返回文件信息列表
+     */
+    List<MyFile> getFileByAuthor(Integer id, int fileType);
 }

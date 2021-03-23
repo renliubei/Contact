@@ -44,7 +44,7 @@ public class FileServiceImpl implements FileService {
             myFile.setFileType(fileType);
             myFile.setFilename(filename);
             myFile.setAuthorId(user.getId());
-            myFile.setUrl(path + "\\" + myFile.getFilename());
+            myFile.setUrl(path + "\\" + myFile.getFilename() + suffixName);
             if (1 != fileDao.insertFile(myFile)) return FAIL;
         } catch (Exception e) {
             e.printStackTrace();
