@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,11 +35,24 @@ public class UserServiceImpl implements UserService {
     public User loginByMobile(String mobile, String password) {
         User user = userDao.selectByUserMobile(mobile);
         if (user != null && user.getPassword().equals(HashUtil.sha256(password))) {
-            user.setToken(HashUtil.sha256(user.getMobile() + UUID.randomUUID()));
+            user.setToken(HashUtil.sha256(user.getMobile() + user.getUsername()));
             if (userDao.updateLogin(user) == 1)
                 return user;
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Integer logout(Integer id) {
+        User user = userDao.selectByUserId(id);
+        user.setToken(null);
+        return userDao.updateLogin(user);
+    }
+
+    @Override
+    public User getUserById(Integer id) {
+        return userDao.selectByUserId(id);
     }
 
     @Override

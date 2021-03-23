@@ -13,10 +13,11 @@ import java.util.Date;
 public class Picture {
 
     private Integer id;
-    private String fileName;
+    private String fileame;
     private String nameByUser;
     @DateTimeFormat(pattern = "yyyy-mm-dd 'T' HH:mm:ss")
     private Date uploadTime;
     private String url;
     private Integer authorId;
+    private boolean deleted;
 }
